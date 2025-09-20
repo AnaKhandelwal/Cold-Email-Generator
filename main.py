@@ -1,5 +1,5 @@
 import streamlit as st
-from langchain-community.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import WebBaseLoader
 from chains import Chain
 from portfolio import Portfolio
 from utils import clean_text
@@ -47,4 +47,5 @@ if __name__ == "__main__":
     portfolio = Portfolio()
     st.set_page_config(layout="wide", page_title="Cold Email Generator", page_icon="📧")
     create_streamlit_app(chain, portfolio, clean_text)
+
 
