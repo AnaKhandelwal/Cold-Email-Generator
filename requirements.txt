@@ -1,9 +1,10 @@
+chromadb
 streamlit
 langchain
 langchain-community
 langchain-groq
-chromadb
 openai
 requests
 pandas
 PyPDF2
+duckdb
