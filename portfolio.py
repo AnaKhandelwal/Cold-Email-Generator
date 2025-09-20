@@ -1,32 +1,30 @@
 import uuid
 import chromadb
-from chromadb.config import Settings
-
-# Use a temporary directory for persistence
-chroma_client = chromadb.Client(
-    Settings(
-        chroma_db_impl="duckdb+parquet",
-        persist_directory="/tmp/chroma"  # safe for Streamlit Cloud
-    )
-)
 
 class Portfolio:
     def __init__(self, collection_name="user_resume_vectorstore"):
-        self.collection = chroma_client.get_or_create_collection(name=collection_name)
+        try:
+            # In-memory client (safe for Streamlit Cloud)
+            self.chroma_client = chromadb.Client()
+            self.collection = self.chroma_client.get_or_create_collection(name=collection_name)
+        except Exception as e:
+            raise RuntimeError(f"Failed to initialize Chroma vector DB: {e}")
 
     def add_resume(self, resume_text, user_id=None):
-        if not user_id:
-            user_id = str(uuid.uuid4())
-        self.collection.add(
-            documents=[resume_text],
-            metadatas=[{"user_id": user_id}],
-            ids=[user_id]
-        )
-        return user_id
+        try:
+            if not user_id:
+                user_id = str(uuid.uuid4())
+            self.collection.add(
+                documents=[resume_text],
+                metadatas=[{"user_id": user_id}],  # must be a list!
+                ids=[user_id]
+            )
+            return user_id
+        except Exception as e:
+            raise RuntimeError(f"Failed to add resume to vector DB: {e}")
 
     def query_resume(self, query_text, n_results=1):
-        results = self.collection.query(
-            query_texts=[query_text],
-            n_results=n_results
-        )
-        return results.get('metadatas', [])
+        try:
+            return self.collection.query(query_texts=[query_text], n_results=n_results).get('metadatas', [])
+        except Exception as e:
+            raise RuntimeError(f"Failed to query vector DB: {e}")
