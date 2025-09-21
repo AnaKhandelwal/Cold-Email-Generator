@@ -23,7 +23,8 @@ class Chain:
 
             ### INSTRUCTION:
             The scraped text is from the career page of a website.
-            Extract the job postings in JSON format containing `role`, `experience`, `skills`, and `description`.
+            Extract job postings from the text in JSON format with fields `role`, `experience`, `skills`, and `description`.
+            Keep the JSON concise and only include relevant content.
             Only return valid JSON.
             ### VALID JSON (NO PREAMBLE):
             """
@@ -75,4 +76,5 @@ class Chain:
             "user_info": resume
         })
         return res.content
+
 
