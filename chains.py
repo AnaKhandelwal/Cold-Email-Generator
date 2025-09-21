@@ -40,6 +40,7 @@ class Chain:
 
     def write_mail(self, job, resume=""):
         prompt_email = PromptTemplate.from_template(
+   prompt_email = PromptTemplate.from_template(
     """
     ## INSTRUCTION:
     You are writing a professional cold email for a job application. 
@@ -49,10 +50,10 @@ class Chain:
 
     1. Subject line reflecting the role or your expertise.  
     2. **Polite greeting** addressing the hiring manager or team.  
-    3. **Intro paragraph**: mention the specific role and company (use the company name from the job description), and briefly introduce yourself.  
+    3. **Intro paragraph**: mention the specific role and the **company name (extract it from {job_description})**, and briefly introduce yourself.  
     4. **Expertise paragraph(s)**: summarize key skills, experience, and relevant technologies from the resume that match the job description.  
     5. **Portfolio/examples**: include 2–3 bullet points highlighting relevant achievements or projects from the resume.  
-    6. **Summary paragraph**: explain why you are a strong fit and how you can contribute to the company’s goals.  
+    6. **Summary paragraph**: explain why you are a strong fit and how you can contribute to the company’s goals (always use the company name explicitly, not a placeholder).  
     7. **Call-to-action paragraph**: politely request a meeting, call, or discussion.  
     8. **Professional signature**: name, designation, and optional links.
 
@@ -63,13 +64,15 @@ class Chain:
     {job_description}
 
     Follow this format exactly. Keep the tone professional, concise, and persuasive. 
-    Use first person (I, my, me), ensure every part of the email connects back to the company and role, use the company name wherever relevant, and limit content to ~150 words.
+    Use first person (I, my, me). 
+    **Important: Extract the actual company name from {job_description} and use it throughout. Do not write [Company Name].**
+    Limit content to ~150 words.
 
     ### EMAIL (NO PREAMBLE):
     NO PREAMBLE, JUST THE EMAIL
     """
-
 )
+
 
         chain_email = prompt_email | self.llm
         res = chain_email.invoke({
@@ -77,6 +80,7 @@ class Chain:
             "user_info": resume
         })
         return res.content
+
 
 
 
