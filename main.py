@@ -4,13 +4,19 @@ from chains import Chain
 from portfolio import Portfolio
 from utils import clean_text
 import PyPDF2
+import pdfplumber
 
 def read_resume(file):
     if file.type == "application/pdf":
-        reader = PyPDF2.PdfReader(file)
         text = ""
-        for page in reader.pages:
-            text += page.extract_text() + "\n"
+        try:
+            reader = PyPDF2.PdfReader(file)
+            for page in reader.pages:
+                text += page.extract_text() or ""
+        except:
+            with pdfplumber.open(file) as pdf:
+                for page in pdf.pages:
+                    text += page.extract_text() or ""
         return text
     elif file.type == "text/plain":
         return file.read().decode("utf-8")
@@ -27,7 +33,10 @@ def create_streamlit_app(llm, portfolio, clean_text):
 
     if resume_file:
         resume_text = read_resume(resume_file)
-        user_id = portfolio.add_resume(resume_text)
+        if resume_text.strip():
+            user_id = portfolio.add_resume(resume_text)
+        else:
+            st.error("Resume could not be parsed. Please upload a valid PDF/TXT.")
 
     submit_button = st.button("Submit")
 
@@ -47,5 +56,3 @@ if __name__ == "__main__":
     portfolio = Portfolio()
     st.set_page_config(layout="wide", page_title="Cold Email Generator", page_icon="📧")
     create_streamlit_app(chain, portfolio, clean_text)
-
-
