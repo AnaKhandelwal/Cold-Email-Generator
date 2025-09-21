@@ -43,7 +43,7 @@ class Chain:
     """
     ## INSTRUCTION:
     You are writing a professional cold email for a job application. 
-    The email must be approximately 150 words and directly relevant to BOTH the company and the job description. Use the company's name to get infomrmation about it and relate it in the email.
+    The email must be approximately 150 words and directly relevant to BOTH the company and the job description.
     Use the candidate's resume ({user_info}) to highlight relevant skills, experience, and achievements. 
     Follow this exact format:
 
@@ -77,6 +77,7 @@ class Chain:
             "user_info": resume
         })
         return res.content
+
 
 
 
