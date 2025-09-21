@@ -40,35 +40,34 @@ class Chain:
 
     def write_mail(self, job, resume=""):
         prompt_email = PromptTemplate.from_template(
-"""
-## INSTRUCTION:
-You are writing a professional cold email for a job application. 
-The email must be **approximately 150 words** (strictly) and directly relevant to BOTH the company and the job description. 
-Use the candidate's resume ({user_info}) to highlight relevant skills, experience, and achievements. 
-Format the email in a **concise, readable, point-by-point style** where possible, while maintaining a professional and persuasive tone. 
-Follow this exact format:
+ """
+    ## INSTRUCTION:
+    You are writing a professional cold email for a job application. 
+    The email must be approximately 150 words and directly relevant to BOTH the company and the job description. 
+    Use the candidate's resume ({user_info}) to highlight relevant skills, experience, and achievements. 
+    Follow this exact format:
 
-1. Subject line reflecting the role or your expertise.  
-2. **Polite greeting** addressing the hiring manager or team.  
-3. **Intro paragraph**: mention the specific role and company, and briefly introduce yourself.  
-4. **Expertise paragraph(s)**: summarize key skills, experience, and relevant technologies from the resume that match the job description.  
-5. **Portfolio/examples**: include 2–3 bullet points highlighting relevant achievements or projects from the resume.  
-6. **Summary paragraph**: explain why you are a strong fit and how you can contribute to the company’s goals.  
-7. **Call-to-action paragraph**: politely request a meeting, call, or discussion.  
-8. **Professional signature**: name, designation, and optional links.
+    1. Subject line reflecting the role or your expertise.  
+    2. **Polite greeting** addressing the hiring manager or team.  
+    3. **Intro paragraph**: mention the specific role and company, and briefly introduce yourself.  
+    4. **Expertise paragraph(s)**: summarize key skills, experience, and relevant technologies from the resume that match the job description.  
+    5. **Portfolio/examples**: include 2–3 bullet points highlighting relevant achievements or projects from the resume.  
+    6. **Summary paragraph**: explain why you are a strong fit and how you can contribute to the company’s goals.  
+    7. **Call-to-action paragraph**: politely request a meeting, call, or discussion.  
+    8. **Professional signature**: name, designation, and optional links.
 
-Candidate information (from uploaded resume):
-{user_info}
+    Candidate information (from uploaded resume):
+    {user_info}
 
-Job / company information (scraped from the URL):
-{job_description}
+    Job / company information (scraped from the URL):
+    {job_description}
 
-Follow this format exactly. Keep the tone professional, concise, and persuasive. 
-Use first person (I, my, me), ensure every part of the email **directly connects to the company’s goals and the job requirements**, and **strictly limit content to ~150 words**. Use bullet points where it improves clarity.
+    Follow this format exactly. Keep the tone professional, concise, and persuasive. 
+    Use first person (I, my, me), ensure every part of the email connects back to the company and role, and limit content to ~150 words.
 
-### EMAIL (NO PREAMBLE):
-NO PREAMBLE, JUST THE EMAIL
-"""
+    ### EMAIL (NO PREAMBLE):
+    NO PREAMBLE, JUST THE EMAIL
+    """
 
 )
 
@@ -78,6 +77,7 @@ NO PREAMBLE, JUST THE EMAIL
             "user_info": resume
         })
         return res.content
+
 
 
 
