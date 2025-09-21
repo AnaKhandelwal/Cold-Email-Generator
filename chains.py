@@ -40,7 +40,6 @@ class Chain:
 
     def write_mail(self, job, resume=""):
         prompt_email = PromptTemplate.from_template(
-   prompt_email = PromptTemplate.from_template(
     """
     ## INSTRUCTION:
     You are writing a professional cold email for a job application. 
@@ -80,6 +79,7 @@ class Chain:
             "user_info": resume
         })
         return res.content
+
 
 
 
