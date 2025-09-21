@@ -40,11 +40,12 @@ class Chain:
 
     def write_mail(self, job, resume=""):
         prompt_email = PromptTemplate.from_template(
-    """
+"""
 ## INSTRUCTION:
 You are writing a professional cold email for a job application. 
 The email must be **approximately 150 words** (strictly) and directly relevant to BOTH the company and the job description. 
 Use the candidate's resume ({user_info}) to highlight relevant skills, experience, and achievements. 
+Format the email in a **concise, readable, point-by-point style** where possible, while maintaining a professional and persuasive tone. 
 Follow this exact format:
 
 1. Subject line reflecting the role or your expertise.  
@@ -63,11 +64,12 @@ Job / company information (scraped from the URL):
 {job_description}
 
 Follow this format exactly. Keep the tone professional, concise, and persuasive. 
-Use first person (I, my, me), ensure every part of the email connects back to the company and role, and **strictly limit content to ~150 words**.
+Use first person (I, my, me), ensure every part of the email **directly connects to the company’s goals and the job requirements**, and **strictly limit content to ~150 words**. Use bullet points where it improves clarity.
 
 ### EMAIL (NO PREAMBLE):
 NO PREAMBLE, JUST THE EMAIL
 """
+
 )
 
         chain_email = prompt_email | self.llm
@@ -76,6 +78,7 @@ NO PREAMBLE, JUST THE EMAIL
             "user_info": resume
         })
         return res.content
+
 
 
 
