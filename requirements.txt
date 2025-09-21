@@ -10,3 +10,4 @@ PyPDF2
 duckdb
 pysqlite3-binary
 pdfplumber
+beautifulsoup4
