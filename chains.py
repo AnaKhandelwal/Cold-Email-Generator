@@ -40,7 +40,7 @@ class Chain:
 
     def write_mail(self, job, resume=""):
         prompt_email = PromptTemplate.from_template(
- """
+    """
     ## INSTRUCTION:
     You are writing a professional cold email for a job application. 
     The email must be approximately 150 words and directly relevant to BOTH the company and the job description. 
@@ -77,6 +77,7 @@ class Chain:
             "user_info": resume
         })
         return res.content
+
 
 
 
