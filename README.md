@@ -16,8 +16,13 @@ Built with **Streamlit, LangChain, and ChromaDB**.
 ## 📂 Project Structure
 cold-email-generator/
 │── main.py # Streamlit app entry point
+
 │── chains.py # LangChain chains for email generation
+
 │── portfolio.py # Handles resume storage & queries with ChromaDB
+
 │── requirements.txt # Project dependencies
+
 ├── .streamlit/ # Streamlit Cloud config (secrets.toml goes here)
+
 │ └── secrets.toml
